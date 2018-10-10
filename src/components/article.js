@@ -1,4 +1,5 @@
 import React, { PureComponent } from 'react'
+import CommentsList from './comments-list'
 
 class Article extends PureComponent {
   render() {
@@ -23,7 +24,12 @@ class Article extends PureComponent {
   get body() {
     const { isOpen, article } = this.props
     if (!isOpen) return null
-    return <section>{article.text}</section>
+    return (
+      <section>
+        {article.text}
+        <CommentsList comments={article.comments} />
+      </section>
+    )
   }
 }
 
