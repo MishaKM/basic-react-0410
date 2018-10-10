@@ -42,27 +42,21 @@ const LABELS = {
 }
 
 class DateRange extends Component {
-  constructor(props) {
-    super(props)
-    this.handleDayClick = this.handleDayClick.bind(this)
-    this.handleDayMouseEnter = this.handleDayMouseEnter.bind(this)
-    this.handleResetClick = this.handleResetClick.bind(this)
-    this.state = this.getInitialState()
-  }
+  state = this.getInitialState()
   getInitialState() {
     return {
       from: null,
       to: null,
-      enteredTo: null, // Keep track of the last day for mouseEnter.
+      enteredTo: null,
       locale: 'ru'
     }
   }
-  isSelectingFirstDay(from, to, day) {
+  isSelectingFirstDay = (from, to, day) => {
     const isBeforeFirstDay = from && DateUtils.isDayBefore(day, from)
     const isRangeSelected = from && to
     return !from || isBeforeFirstDay || isRangeSelected
   }
-  handleDayClick(day) {
+  handleDayClick = (day) => {
     const { from, to } = this.state
     if (from && to && day >= from && day <= to) {
       this.handleResetClick()
@@ -81,7 +75,7 @@ class DateRange extends Component {
       })
     }
   }
-  handleDayMouseEnter(day) {
+  handleDayMouseEnter = (day) => {
     const { from, to } = this.state
     if (!this.isSelectingFirstDay(from, to, day)) {
       this.setState({
@@ -89,7 +83,7 @@ class DateRange extends Component {
       })
     }
   }
-  handleResetClick() {
+  handleResetClick = () => {
     this.setState(this.getInitialState())
   }
   render() {
@@ -130,14 +124,14 @@ class DateRange extends Component {
         </div>
         <Helmet>
           <style>{`
-  .Range .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
-    background-color: #f0f8ff !important;
-    color: #4a90e2;
-  }
-  .Range .DayPicker-Day {
-    border-radius: 0 !important;
-  }
-`}</style>
+                  .Range .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+                    background-color: #f0f8ff !important;
+                    color: #4a90e2;
+                  }
+                  .Range .DayPicker-Day {
+                    border-radius: 0 !important;
+                  }
+          `}</style>
         </Helmet>
       </div>
     )
