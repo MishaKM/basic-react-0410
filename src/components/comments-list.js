@@ -4,8 +4,9 @@ import dropdown from '../decorators/dropdown'
 
 class CommentsList extends Component {
   render() {
-    const { isOpen } = this.props
+    const { isOpen, comments } = this.props
     const text = isOpen ? 'Close comments' : 'Open comments'
+    if (!Array.isArray(comments)) return null
     return (
       <div className="comments_block">
         <button onClick={this.onButtonClick}>{text}</button>
