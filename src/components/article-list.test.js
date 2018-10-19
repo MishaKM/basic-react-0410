@@ -12,7 +12,9 @@ describe('ArticleList', () => {
   })
 
   it('should render items', () => {
-    const container = shallow(<ArticleList articles={articles} />)
+    const container = shallow(
+      <ArticleList articles={articles} toggleOpenItem={() => () => {}} />
+    )
 
     expect(container.find('.test--article-list__item').length).toEqual(
       articles.length
@@ -41,9 +43,40 @@ describe('ArticleList', () => {
   it('should should fetch data on mount', () => {
     let functionIsCalled = false
     mount(
-      <ArticleList articles={[]} fetchData={() => (functionIsCalled = true)} />
+      <ArticleList
+        articles={[]}
+        fetchData={() => (functionIsCalled = true)}
+        toggleOpenItem={() => () => {}}
+      />
     )
 
     expect(functionIsCalled).toBe(true)
+  })
+
+  it('should close an article', (done) => {
+    const wrapper = mount(<ArticleListWithAccordion articles={articles} />)
+    expect(wrapper.find('.test__article--body').length).toEqual(0)
+
+    wrapper
+      .find('.test--article__btn')
+      .at(0)
+      .simulate('click')
+    expect(wrapper.find('.test--article__body').length).toEqual(1)
+
+    wrapper
+      .find('.test--article__btn')
+      .at(0)
+      .simulate('click')
+
+    setTimeout(() => {
+      try {
+        wrapper.simulate('transitionEnd')
+
+        expect(wrapper.find('.test--article__body').length).toEqual(0)
+        done()
+      } catch (err) {
+        done.fail(err)
+      }
+    }, 800)
   })
 })

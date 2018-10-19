@@ -1,9 +1,21 @@
 import React, { PureComponent } from 'react'
 import CSSTransition from 'react-addons-css-transition-group'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import CommentList from '../comment-list'
+import { deleteArticle } from '../../ac'
 import './style.css'
 
-class Index extends PureComponent {
+class Article extends PureComponent {
+  static propTypes = {
+    article: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      text: PropTypes.string
+    }).isRequired,
+    isOpen: PropTypes.bool,
+    toggleOpen: PropTypes.func.isRequired
+  }
+
   state = {
     error: null
   }
@@ -21,6 +33,7 @@ class Index extends PureComponent {
           <button onClick={this.handleClick} className="test--article__btn">
             {isOpen ? 'close' : 'open'}
           </button>
+          <button onClick={this.handleDeleteClick}>delete me</button>
         </h3>
         <CSSTransition
           transitionAppear
@@ -33,6 +46,11 @@ class Index extends PureComponent {
         </CSSTransition>
       </div>
     )
+  }
+
+  handleDeleteClick = () => {
+    const { deleteArticle, article } = this.props
+    deleteArticle(article.id)
   }
 
   handleClick = () => this.props.toggleOpen(this.props.article.id)
@@ -51,4 +69,7 @@ class Index extends PureComponent {
   }
 }
 
-export default Index
+export default connect(
+  null,
+  { deleteArticle }
+)(Article)
