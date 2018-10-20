@@ -1,19 +1,22 @@
 import React, { Component } from 'react'
 import DayPicker, { DateUtils } from 'react-day-picker'
-
 import 'react-day-picker/lib/style.css'
+import { connect } from 'react-redux'
+import { filterDateRange } from '../../ac'
 
 class DateRange extends Component {
-  state = {
-    from: null,
-    to: null
+  handleDayClick = (day) => {
+    const { from, to, filterDateRange } = this.props
+    filterDateRange(DateUtils.addDayToRange(day, { from, to }))
+  }
+  // без кнопки резет неудобно было тестировать
+  handleResetClick = () => {
+    const { filterDateRange } = this.props
+    filterDateRange({ from: null, to: null })
   }
 
-  handleDayClick = (day) =>
-    this.setState(DateUtils.addDayToRange(day, this.state))
-
   render() {
-    const { from, to } = this.state
+    const { from, to } = this.props
     const selectedRange =
       from && to && `${from.toDateString()} - ${to.toDateString()}`
     return (
@@ -23,9 +26,13 @@ class DateRange extends Component {
           onDayClick={this.handleDayClick}
         />
         {selectedRange}
+        <button onClick={this.handleResetClick}>Reset</button>
       </div>
     )
   }
 }
 
-export default DateRange
+export default connect(
+  (state) => ({ ...state.articles.filters.dateRange }),
+  { filterDateRange }
+)(DateRange)
