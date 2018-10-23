@@ -19,7 +19,6 @@ class Counter extends Component {
   }
 
   handleClick = () => {
-    console.log('---', 'todo: implement me')
     //        this.props.dispatch(increment())
     this.props.handleIncrement()
   }

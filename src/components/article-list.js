@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Article from './article'
 import accordionDecorator from '../decorators/accordion'
+import { filtratedArticlesSelector } from '../selectors'
 
 export class ArticleList extends Component {
   static propTypes = {
@@ -15,6 +16,7 @@ export class ArticleList extends Component {
   }
 
   render() {
+    console.log('---', 'rendering article list')
     return <ul>{this.items}</ul>
   }
 
@@ -37,8 +39,9 @@ export class ArticleList extends Component {
   }
 }
 
-const ArticleListWithAccordion = accordionDecorator(ArticleList)
-
-export default connect((state) => ({
-  articles: state.articles
-}))(ArticleListWithAccordion)
+export default connect((state) => {
+  console.log('---', 'article list connect')
+  return {
+    articles: filtratedArticlesSelector(state)
+  }
+})(accordionDecorator(ArticleList))
