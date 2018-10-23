@@ -9,6 +9,7 @@ import './style.css'
 class Article extends PureComponent {
   static propTypes = {
     article: PropTypes.shape({
+      id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       text: PropTypes.string
     }).isRequired,
@@ -63,7 +64,7 @@ class Article extends PureComponent {
     return (
       <section className="test--article__body">
         {article.text}
-        <CommentList comments={article.comments} />
+        <CommentList comments={article.comments} articleId={article.id} />
       </section>
     )
   }
