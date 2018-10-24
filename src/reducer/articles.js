@@ -21,8 +21,14 @@ export default (articlesState = defaultArticles, action) => {
 
     case ADD_COMMENT:
       result = { ...articlesState }
+      result[payload.comment.articleId] = {
+        ...result[payload.comment.articleId]
+      }
       result[payload.comment.articleId].comments =
         result[payload.comment.articleId].comments || []
+      result[payload.comment.articleId].comments = [
+        ...result[payload.comment.articleId].comments
+      ]
       result[payload.comment.articleId].comments.push(payload.comment.id)
       return result
 
