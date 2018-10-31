@@ -35,7 +35,7 @@ export default (state = new ReducerRecord(), action) => {
     case ADD_COMMENT:
       return state.updateIn(
         ['entities', payload.articleId, 'comments'],
-        (comments) => comments.push(randomId)
+        (comments) => comments.concat(randomId) // Здесь comments это обычный массив, его нельзя мутитьвать. Верно?
       )
 
     case LOAD_ALL_ARTICLES + START:
