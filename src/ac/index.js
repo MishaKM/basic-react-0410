@@ -8,7 +8,8 @@ import {
   LOAD_ARTICLE,
   START,
   SUCCESS,
-  FAIL
+  FAIL,
+  LOAD_COMMENTS
 } from '../constants'
 
 export function increment() {
@@ -83,6 +84,31 @@ export function loadArticleById(id) {
         dispatch({
           type: LOAD_ARTICLE + FAIL,
           payload: { id },
+          error
+        })
+      )
+  }
+}
+
+export function loadCommentList(articleId) {
+  return (dispatch) => {
+    dispatch({
+      type: LOAD_COMMENTS + START,
+      payload: { articleId }
+    })
+    fetch(`/api/comment?article=${articleId}`)
+      .then((res) => res.json())
+      .then((response) =>
+        dispatch({
+          type: LOAD_COMMENTS + SUCCESS,
+          payload: { articleId },
+          response
+        })
+      )
+      .catch((error) =>
+        dispatch({
+          type: LOAD_COMMENTS + FAIL,
+          payload: { articleId },
           error
         })
       )
