@@ -2,20 +2,25 @@
   "name": "basic-04-10",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:3001/",
   "dependencies": {
+    "immutable": "^4.0.0-rc.11",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
     "react-addons-css-transition-group": "^15.6.2",
     "react-day-picker": "^7.2.4",
     "react-dom": "^16.5.2",
     "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
     "react-scripts": "2.0.4",
     "react-select": "^2.1.0",
     "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "concurrently \"react-scripts start\" \"npm run api\"",
+    "api": "node simple_api/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "prettier": "prettier --write \"**/*.js\"",
@@ -27,6 +32,7 @@
     }
   },
   "devDependencies": {
+    "concurrently": "^4.0.1",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.6.0",
     "husky": "^1.0.0-rc.6",
