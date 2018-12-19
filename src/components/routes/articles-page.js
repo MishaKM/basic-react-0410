@@ -9,6 +9,7 @@ class ArticlesPage extends Component {
   render() {
     console.log('---', 'articles-page match: ', this.props.match)
     //      const title = this.props.match.isExact && <h1>Select an Article</h1>
+    console.log('---', 1)
     return (
       <Fragment>
         <ArticleList />

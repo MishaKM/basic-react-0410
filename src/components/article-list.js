@@ -8,7 +8,7 @@ import {
 } from '../selectors'
 import { loadAllArticles } from '../ac'
 import Loader from './common/loader'
-import { NavLink } from 'react-router-dom'
+import { NavLink, withRouter } from 'react-router-dom'
 
 export class ArticleList extends Component {
   static propTypes = {
@@ -17,6 +17,7 @@ export class ArticleList extends Component {
   }
 
   render() {
+    console.log('---', 2)
     if (this.props.loading) return <Loader />
     return <ul>{this.items}</ul>
   }
@@ -38,13 +39,19 @@ export class ArticleList extends Component {
   }
 }
 
-export default connect(
-  (state) => {
-    return {
-      articles: filtratedArticlesSelector(state),
-      loading: articlesLoadingSelector(state),
-      loaded: articlesLoadedSelector(state)
-    }
-  },
-  { fetchData: loadAllArticles }
-)(ArticleList)
+export default withRouter(
+  connect(
+    (state) => {
+      return {
+        articles: filtratedArticlesSelector(state),
+        loading: articlesLoadingSelector(state),
+        loaded: articlesLoadedSelector(state)
+      }
+    },
+    { fetchData: loadAllArticles }
+    /*
+    null,
+  { pure: false }
+*/
+  )(ArticleList)
+)

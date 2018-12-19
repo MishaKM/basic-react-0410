@@ -4,6 +4,8 @@
   "private": true,
   "proxy": "http://localhost:3001/",
   "dependencies": {
+    "connected-react-router": "^5.0.1",
+    "history": "^4.7.2",
     "immutable": "^4.0.0-rc.11",
     "prop-types": "^15.6.2",
     "react": "^16.5.2",
