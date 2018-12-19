@@ -3,6 +3,7 @@ import { createSelector } from 'reselect'
 export const selectionSelector = (state) => state.filters.selected
 export const dateRangeSelector = (state) => state.filters.dateRange
 export const articlesLoadingSelector = (state) => state.articles.loading
+export const articlesLoadedSelector = (state) => state.articles.loaded
 export const articlesMapSelector = (state) => state.articles.entities
 export const articleListSelector = createSelector(
   articlesMapSelector,
@@ -32,5 +33,11 @@ export const filtratedArticlesSelector = createSelector(
 
 export const createCommentSelector = () =>
   createSelector(commentsSelector, idSelector, (comments, id) => {
-    return comments[id]
+    return comments.getIn(['entities', id])
   })
+
+export const articleSelector = createSelector(
+  articlesMapSelector,
+  idSelector,
+  (articles, id) => articles.get(id)
+)
